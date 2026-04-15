@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Пользователи</h1>
+
+<section class="panel">
+  <h2>Создать пользователя</h2>
+  <form action="/web/users" method="post" class="form-grid">
+    <label>ФИО</label>
+    <input type="text" name="full_name" required>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <label>Пароль</label>
+    <input type="password" name="password" minlength="6" required>
+    <label>Роль</label>
+    <select name="role">
+      <option value="EXECUTOR">Исполнитель</option>
+      <option value="SERVICE_MANAGER">Руководитель службы</option>
+      <option value="CENTER_MANAGER">Руководитель центра</option>
+      <option value="ADMIN">Администратор</option>
+    </select>
+    <button class="btn" type="submit">Создать</button>
+  </form>
+</section>
+
+<section class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>ФИО</th><th>Email</th><th>Роль</th><th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.full_name }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.role.value }}</td>
+        <td>
+          <form action="/web/users/{{ item.id }}/role" method="post" class="inline-form">
+            <select name="role">
+              <option value="EXECUTOR">EXECUTOR</option>
+              <option value="SERVICE_MANAGER">SERVICE_MANAGER</option>
+              <option value="CENTER_MANAGER">CENTER_MANAGER</option>
+              <option value="ADMIN">ADMIN</option>
+            </select>
+            <button class="btn btn-light" type="submit">Сменить роль</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

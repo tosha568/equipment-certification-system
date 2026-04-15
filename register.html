@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Регистрация | secDB Portal</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="auth-page">
+  <div class="auth-card">
+    <h1>Регистрация</h1>
+    <p>Новые пользователи регистрируются как Исполнитель</p>
+    {% if error %}
+      <div class="alert">{{ error }}</div>
+    {% endif %}
+    <form action="/web/register" method="post" class="form-grid">
+      <label>ФИО</label>
+      <input type="text" name="full_name" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Пароль</label>
+      <input type="password" name="password" minlength="6" required>
+      <button type="submit" class="btn">Создать аккаунт</button>
+    </form>
+    <a href="/web/login" class="link">Уже есть аккаунт? Войти</a>
+  </div>
+</body>
+</html>

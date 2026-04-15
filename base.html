@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title if title else 'secDB Portal' }}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+  <header class="topbar">
+    <div class="brand">secDB Portal</div>
+    {% if user %}
+      <nav class="menu">
+        <a href="/web/dashboard">Главная</a>
+        <a href="/web/requests">Заявки</a>
+        <a href="/web/products">Изделия</a>
+        {% if user.role.value == 'ADMIN' %}
+          <a href="/web/users">Пользователи</a>
+          <a href="/web/admin">Справочники</a>
+        {% endif %}
+      </nav>
+      <div class="user-block">
+        <span>{{ user.full_name }} ({{ role_label }})</span>
+        <form action="/web/logout" method="post">
+          <button type="submit" class="btn btn-light">Выйти</button>
+        </form>
+      </div>
+    {% endif %}
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
