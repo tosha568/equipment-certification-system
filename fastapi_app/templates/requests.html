@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Заявки</h1>
+
+{% if user.role.value in ['EXECUTOR', 'SERVICE_MANAGER', 'ADMIN'] %}
+<section class="panel">
+  <h2>Новая заявка</h2>
+  <form action="/web/requests" method="post" class="form-grid">
+    <label>Название</label>
+    <input type="text" name="title" required>
+    <label>Описание</label>
+    <textarea name="description" rows="3"></textarea>
+    <button class="btn" type="submit">Создать</button>
+  </form>
+</section>
+{% endif %}
+
+<section class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Название</th><th>Статус</th><th>1-е решение</th><th>2-е решение</th><th>Владелец</th><th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.status.value }}</td>
+        <td>{{ item.first_decision if item.first_decision else '-' }}</td>
+        <td>{{ item.second_decision if item.second_decision else '-' }}</td>
+        <td>{{ item.owner_id }}</td>
+        <td>
+          <form action="/web/requests/{{ item.id }}/update" method="post" class="inline-form">
+            <input type="text" name="title" placeholder="Новое название">
+            <input type="text" name="description" placeholder="Описание">
+            <select name="status_value">
+              <option value="">Статус</option>
+              <option value="DRAFT">DRAFT</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="DONE">DONE</option>
+            </select>
+            {% if user.role.value in ['SERVICE_MANAGER', 'ADMIN'] %}
+              <input type="text" name="first_decision" placeholder="1-е решение">
+            {% endif %}
+            {% if user.role.value in ['CENTER_MANAGER', 'ADMIN'] %}
+              <input type="text" name="second_decision" placeholder="2-е решение">
+            {% endif %}
+            <button class="btn btn-light" type="submit">Сохранить</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

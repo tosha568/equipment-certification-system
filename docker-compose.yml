@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    container_name: secdb-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: secDB
+    ports:
+      - '5433:5432'
+    volumes:
+      - secdb_data:/var/lib/postgresql/data
+
+volumes:
+  secdb_data:

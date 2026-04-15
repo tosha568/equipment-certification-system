@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <h1>Панель управления</h1>
+  <p>Роль: <strong>{{ role_label }}</strong></p>
+</section>
+
+<section class="cards">
+  <article class="card">
+    <h3>Заявки</h3>
+    <p class="metric">{{ requests_count }}</p>
+  </article>
+  <article class="card">
+    <h3>Изделия</h3>
+    <p class="metric">{{ products_count }}</p>
+  </article>
+  <article class="card">
+    <h3>Пользователи</h3>
+    <p class="metric">{{ users_count }}</p>
+  </article>
+  <article class="card">
+    <h3>Справочники</h3>
+    <p class="metric">{{ dict_count }}</p>
+  </article>
+</section>
+{% endblock %}

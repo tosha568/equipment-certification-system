@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Справочники и настройки</h1>
+
+<section class="split">
+  <div class="panel">
+    <h2>Добавить элемент справочника</h2>
+    <form action="/web/admin/dictionary" method="post" class="form-grid">
+      <label>Категория</label>
+      <input type="text" name="category" required>
+      <label>Код</label>
+      <input type="text" name="code" required>
+      <label>Значение</label>
+      <input type="text" name="value" required>
+      <button class="btn" type="submit">Добавить</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2>Добавить/изменить настройку</h2>
+    <form action="/web/admin/settings" method="post" class="form-grid">
+      <label>Ключ</label>
+      <input type="text" name="key" required>
+      <label>Значение</label>
+      <input type="text" name="value" required>
+      <button class="btn" type="submit">Сохранить</button>
+    </form>
+  </div>
+</section>
+
+<section class="split">
+  <div class="panel">
+    <h2>Справочники</h2>
+    <ul>
+      {% for d in dictionaries %}
+      <li>{{ d.category }} | {{ d.code }} | {{ d.value }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="panel">
+    <h2>Настройки</h2>
+    <ul>
+      {% for s in settings %}
+      <li>{{ s.key }} = {{ s.value }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}
